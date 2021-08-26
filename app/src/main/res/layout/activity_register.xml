@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StartMenu.RegisterActivity"
+    android:orientation="vertical">
+
+
+    <Button
+        android:id="@+id/Back"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/ic_baseline_arrow_back_24"
+        android:onClick="Back"
+        />
+
+
+    <TextView
+        android:id="@+id/Logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/beauty"
+        android:textSize="46sp"
+        android:fontFamily="@font/raleway_thin"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        />
+
+
+    <EditText
+        android:id="@+id/Email_edit_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:ems="10"
+        android:fontFamily="@font/paytone_one"
+        android:inputType="textEmailAddress"
+        android:textAlignment="center"
+        android:textColor="@color/Grey"
+        android:textSize="12sp" />
+
+    <EditText
+        android:id="@+id/Password_edit_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Email_edit_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:fontFamily="@font/paytone_one"
+        android:inputType="textPassword"
+        android:textAlignment="center"
+        android:textColor="@color/Grey"
+        android:textSize="12sp" />
+
+    <EditText
+        android:id="@+id/PasswordConfirm_edit_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Password_edit_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:fontFamily="@font/paytone_one"
+        android:inputType="textPassword"
+        android:textAlignment="center"
+        android:textColor="@color/Grey"
+        android:textSize="12sp" />
+
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register"
+        android:layout_below="@+id/PasswordConfirm_edit_text"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:onClick="Registration"
+        />
+
+
+
+</RelativeLayout>
