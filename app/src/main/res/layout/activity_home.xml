@@ -7,8 +7,63 @@
     tools:context=".Menu.HomeActivity"
     android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/Grey"
+        android:id="@+id/Bord"
+        android:paddingHorizontal="20dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/armata"
+                android:onClick="GoAccount"
+                android:paddingHorizontal="20dp"
+                android:text="@string/account"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/armata"
+                android:onClick="GoHome"
+                android:paddingHorizontal="20dp"
+                android:text="@string/home"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingHorizontal="20dp"
+                android:fontFamily="@font/armata"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:text="@string/setting"
+                android:onClick="GoSetting"
+                />
+
+        </LinearLayout>
 
 
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/Container"
+        android:layout_below="@+id/Bord"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 
 </RelativeLayout>

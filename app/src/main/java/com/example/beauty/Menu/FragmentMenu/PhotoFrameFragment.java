@@ -20,8 +20,7 @@ public class PhotoFrameFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_photo_frame, container, false);
     }
 
-    public void Like(View view){
 
-    }
+
 
 }

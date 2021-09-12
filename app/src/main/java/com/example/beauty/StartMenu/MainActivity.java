@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void CheckLoginUser(){
-        if (DB.CheckEmailVerification() && DB.CheckLoginUser()){
+        if (DB.CheckLoginUser() && DB.CheckEmailVerification()){
             startActivity(new Intent(this, HomeActivity.class));
         }else {
             setContentView(R.layout.activity_main);

@@ -7,8 +7,17 @@
     android:orientation="vertical">
 
     <ScrollView
+        android:id="@+id/ScrollHome"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp" />
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/LinerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp"/>
+
+    </ScrollView>
 
 </RelativeLayout>

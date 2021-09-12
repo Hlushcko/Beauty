@@ -52,7 +52,11 @@ public class DatabaseLogick extends AppCompatActivity {
 
     public void LogIn(String email, String password){
 
-        if(!Objects.isNull(email) && !Objects.isNull(password)) {
+        Boolean emailBoolean = Check_null(email);
+        Boolean passwordBoolean = Check_null(password);
+
+
+        if( emailBoolean && passwordBoolean) {
             auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
