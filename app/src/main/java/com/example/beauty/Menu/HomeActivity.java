@@ -49,7 +49,6 @@ public class HomeActivity extends AppCompatActivity {
         fragmentLPF.commit();
     }
 
-
     private void AddPhotoFragment(){
 
         FragmentManager fragMen = getSupportFragmentManager();
@@ -60,6 +59,13 @@ public class HomeActivity extends AppCompatActivity {
         fragTran.commit();
 
     }
+
+    public void AddNewPhotoFirebase(View view){
+
+
+
+    }
+
 
 
 }

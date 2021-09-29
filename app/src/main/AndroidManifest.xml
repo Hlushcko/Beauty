@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Beautys">
-        <activity android:name=".StartMenu.RegisterActivity"/>
+        <activity
+            android:name=".AddPhotoFirebase"
+            android:exported="true" />
+        <activity android:name=".StartMenu.RegisterActivity" />
         <activity android:name=".Menu.HomeActivity" />
         <activity android:name=".StartMenu.MainActivity">
             <intent-filter>
