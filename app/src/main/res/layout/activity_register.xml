@@ -12,11 +12,10 @@
         android:id="@+id/Back"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginTop="20dp"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/ic_baseline_arrow_back_24"
-        android:onClick="Back"
-        />
+        android:onClick="Back" />
 
 
     <TextView
