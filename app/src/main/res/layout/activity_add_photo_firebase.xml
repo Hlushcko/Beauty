@@ -20,7 +20,6 @@
         android:id="@+id/imageLoad"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:onClick="GoGallery"
         app:srcCompat="@drawable/ic_baseline_add_circle_24" />

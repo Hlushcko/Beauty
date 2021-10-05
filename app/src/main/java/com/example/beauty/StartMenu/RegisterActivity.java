@@ -8,12 +8,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.beauty.DatabaseLogick;
+import com.example.beauty.DatabaseLogic;
 import com.example.beauty.R;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    DatabaseLogick DB = new DatabaseLogick();
+    DatabaseLogic DB = new DatabaseLogic();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

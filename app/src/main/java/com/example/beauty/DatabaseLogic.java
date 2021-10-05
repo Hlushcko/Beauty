@@ -1,27 +1,33 @@
 package com.example.beauty;
 
+import android.net.Uri;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 
-public class DatabaseLogick extends AppCompatActivity {
+public class DatabaseLogic extends AppCompatActivity {
 
+    private final StorageReference storageRef = FirebaseStorage.getInstance().getReference("PhotoDB");
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
+    private static Uri uriPhoto;
+
 
     @Override
     protected void onStart() {
@@ -75,6 +81,28 @@ public class DatabaseLogick extends AppCompatActivity {
             }
         });
     }
+
+
+    public void PushImageDatabase(byte[] bytePhoto){
+
+        StorageReference myStorage = storageRef.child(System.currentTimeMillis() + "image");
+        UploadTask UT = myStorage.putBytes(bytePhoto);
+
+        Task<Uri> task = UT.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                return storageRef.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                uriPhoto = task.getResult();
+
+            }
+        });
+
+    }
+
 
     public boolean CheckLoginUser(){
         FirebaseUser user = auth.getCurrentUser();
