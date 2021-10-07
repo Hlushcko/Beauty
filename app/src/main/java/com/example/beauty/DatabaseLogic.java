@@ -126,4 +126,22 @@ public class DatabaseLogic extends AppCompatActivity {
         return !TextUtils.isEmpty(check);
     }
 
+    private static class PostPhoto{
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        String User = Objects.requireNonNull(auth.getCurrentUser()).toString();
+        String description;
+        Uri uriPhoto;
+
+        public PostPhoto(String Description, Uri UriPhoto){
+            description = Description;
+            uriPhoto = UriPhoto;
+        }
+
+    }
+
+
+
+
 }

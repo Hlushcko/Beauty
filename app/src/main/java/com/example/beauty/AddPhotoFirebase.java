@@ -1,20 +1,16 @@
 package com.example.beauty;
 
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.example.beauty.Menu.HomeActivity;
-import com.example.beauty.StartMenu.RegisterActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Objects;
@@ -63,12 +59,12 @@ public class AddPhotoFirebase extends AppCompatActivity {
 
     }
 
-    private void ConvertedPhotoToByte(){
+    private byte[] ConvertedPhotoToByte(){
 
         Bitmap bitmap = ((BitmapDrawable)photo.getDrawable()).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] bytePhoto = baos.toByteArray();
+        return baos.toByteArray();
 
     }
 
