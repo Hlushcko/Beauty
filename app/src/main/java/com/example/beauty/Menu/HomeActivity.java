@@ -5,10 +5,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.beauty.AddPhotoFirebase;
 import com.example.beauty.Menu.FragmentMenu.ComentsFragment;
 import com.example.beauty.Menu.FragmentMenu.ListPhotoFragment;
 import com.example.beauty.Menu.FragmentMenu.PhotoFrameFragment;
@@ -61,9 +63,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void AddNewPhotoFirebase(View view){
-
-
-
+        startActivity(new Intent(this, AddPhotoFirebase.class));
     }
 
 

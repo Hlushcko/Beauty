@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         EditText password = findViewById(R.id.Password_edit_text);
 
         DB.LogIn(email.getText().toString(), password.getText().toString());
-        CheckLoginUser();
+        recreate();
     }
 
 

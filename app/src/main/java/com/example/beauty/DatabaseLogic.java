@@ -8,11 +8,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -24,10 +27,14 @@ import java.util.Objects;
 
 public class DatabaseLogic extends AppCompatActivity {
 
-    private final StorageReference storageRef = FirebaseStorage.getInstance().getReference("PhotoDB");
+
+    private final String serverUrl= "https://beauty-e0204-default-rtdb.europe-west1.firebasedatabase.app";
+    private final FirebaseDatabase firebaseData = FirebaseDatabase.getInstance(serverUrl);
+    private final DatabaseReference PostReference = firebaseData.getReference("Post");
+    private final StorageReference storageRef = FirebaseStorage.getInstance().getReference("DataBasePhoto");
+    private final StorageReference myStorage = storageRef.child(System.currentTimeMillis() + "image");
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
     private static Uri uriPhoto;
-
 
     @Override
     protected void onStart() {
@@ -67,7 +74,6 @@ public class DatabaseLogic extends AppCompatActivity {
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
-
                         }
                     });
         }
@@ -83,30 +89,41 @@ public class DatabaseLogic extends AppCompatActivity {
     }
 
 
-    public void PushImageDatabase(byte[] bytePhoto){
+    public void PushImageDatabase(byte[] bytePhoto, String description){
 
-        StorageReference myStorage = storageRef.child(System.currentTimeMillis() + "image");
-        UploadTask UT = myStorage.putBytes(bytePhoto);
+        UploadTask uploadTask = myStorage.putBytes(bytePhoto);
 
-        Task<Uri> task = UT.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
-            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                return storageRef.getDownloadUrl();
-            }
-        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                uriPhoto = task.getResult();
-
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        uriPhoto = task.getResult();
+                        PushPostRealTimeDataBase(uriPhoto.toString(), description);
+                    }
+                });
             }
         });
 
     }
 
+    public void PushPostRealTimeDataBase(String photoUri, String description){
+
+        DatabaseReference ref = FirebaseDatabase.getInstance(serverUrl).getReference("savingPostInfo");
+
+        ref.push().setValue("ter");
+        ref.push().setValue(new PostPhoto(description, photoUri));
+    }
+
 
     public boolean CheckLoginUser(){
         FirebaseUser user = auth.getCurrentUser();
-        return user != null;
+        if(user != null){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public boolean CheckEmailVerification(){
@@ -126,17 +143,31 @@ public class DatabaseLogic extends AppCompatActivity {
         return !TextUtils.isEmpty(check);
     }
 
-    private static class PostPhoto{
 
-        FirebaseAuth auth = FirebaseAuth.getInstance();
+    public static class PostPhoto{
 
-        String User = Objects.requireNonNull(auth.getCurrentUser()).toString();
-        String description;
-        Uri uriPhoto;
+        public String description;
+        public String uriPhoto;
 
-        public PostPhoto(String Description, Uri UriPhoto){
+        public PostPhoto(String Description, String UriPhoto) {
             description = Description;
             uriPhoto = UriPhoto;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getUriPhoto() {
+            return uriPhoto;
+        }
+
+        public void setUriPhoto(String uriPhoto) {
+            this.uriPhoto = uriPhoto;
         }
 
     }

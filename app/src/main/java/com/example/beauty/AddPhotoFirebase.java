@@ -6,18 +6,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.beauty.Menu.HomeActivity;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.Objects;
 
 public class AddPhotoFirebase extends AppCompatActivity {
 
     ImageView photo;
+    DatabaseLogic DB = new DatabaseLogic();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,14 +52,21 @@ public class AddPhotoFirebase extends AppCompatActivity {
 
     public void GoGallery(View view) {
 
-        Intent intentGallery = new Intent();
-        intentGallery.setType("image/");
-        intentGallery.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intentGallery, 1);
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, ""), 1);
 
     }
 
     public void PushInfoPost(View view) {
+
+        TextView description = findViewById(R.id.InfoNewPost);
+
+        if(description != null && photo != null) {
+            DB.PushImageDatabase(ConvertedPhotoToByte(), description.getText().toString());
+
+        }
 
     }
 
@@ -69,5 +80,7 @@ public class AddPhotoFirebase extends AppCompatActivity {
     }
 
 
-
+    public void logout(View view) {
+        DB.SignOut();
+    }
 }
