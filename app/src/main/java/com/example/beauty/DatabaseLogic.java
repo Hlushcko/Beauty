@@ -14,14 +14,18 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 
@@ -29,10 +33,13 @@ public class DatabaseLogic extends AppCompatActivity {
 
 
     private final String serverUrl= "https://beauty-e0204-default-rtdb.europe-west1.firebasedatabase.app";
-    private final FirebaseDatabase firebaseData = FirebaseDatabase.getInstance(serverUrl);
     private final StorageReference storageRef = FirebaseStorage.getInstance().getReference("DataBasePhoto");
     private final StorageReference myStorage = storageRef.child(System.currentTimeMillis() + "image");
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
+    private final DatabaseReference RealTimeDB = FirebaseDatabase.getInstance(serverUrl).getReference("savingPostInfo");
+    final private int MAX_SIZE_ARRAY = 10;
+
+
 
     @Override
     protected void onStart() {
@@ -106,16 +113,35 @@ public class DatabaseLogic extends AppCompatActivity {
     }
 
     private void PushPostRealTimeDataBase(String photoUri, String description){
-        DatabaseReference ref = FirebaseDatabase.getInstance(serverUrl).getReference("savingPostInfo");
-
-        ref.push().setValue(new PostPhoto(description, photoUri));
+        RealTimeDB.push().setValue(new PostPhoto(description, photoUri));
     }
 
+    public ArrayList<PostPhoto> getPhoto(){
 
-    public void getPhoto(){
+        ArrayList<PostPhoto> pp = new ArrayList<>();
 
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot){
 
+                for(DataSnapshot DS : snapshot.child("savingPostInfo").getChildren()) {
+                    PostPhoto photo = DS.getValue(PostPhoto.class);
+                    assert photo != null;
+                    pp.add(photo);
+                    if(pp.size() == MAX_SIZE_ARRAY) {
+                        return;
+                    }
+                }
 
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+
+        return pp;
     }
 
 

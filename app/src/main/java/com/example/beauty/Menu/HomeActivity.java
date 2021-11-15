@@ -9,18 +9,22 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.beauty.AddPhotoFirebase;
+import com.example.beauty.DatabaseLogic;
 import com.example.beauty.Menu.FragmentMenu.ComentsFragment;
 import com.example.beauty.Menu.FragmentMenu.ListPhotoFragment;
 import com.example.beauty.Menu.FragmentMenu.PhotoFrameFragment;
 import com.example.beauty.R;
 
+import java.util.ArrayList;
+
 public class HomeActivity extends AppCompatActivity {
+
+    private final DatabaseLogic DB = new DatabaseLogic();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
     }
 
 
@@ -38,7 +42,7 @@ public class HomeActivity extends AppCompatActivity {
         fragmentLPF.replace(R.id.Container, LPF);
         fragmentLPF.commit();
 
-
+        ArrayList<DatabaseLogic.PostPhoto> postPhotos = new ArrayList<>(DB.getPhoto());
     }
 
 
