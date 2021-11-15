@@ -30,11 +30,9 @@ public class DatabaseLogic extends AppCompatActivity {
 
     private final String serverUrl= "https://beauty-e0204-default-rtdb.europe-west1.firebasedatabase.app";
     private final FirebaseDatabase firebaseData = FirebaseDatabase.getInstance(serverUrl);
-    private final DatabaseReference PostReference = firebaseData.getReference("Post");
     private final StorageReference storageRef = FirebaseStorage.getInstance().getReference("DataBasePhoto");
     private final StorageReference myStorage = storageRef.child(System.currentTimeMillis() + "image");
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
-    private static Uri uriPhoto;
 
     @Override
     protected void onStart() {
@@ -99,8 +97,7 @@ public class DatabaseLogic extends AppCompatActivity {
                 taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                     @Override
                     public void onComplete(@NonNull Task<Uri> task) {
-                        uriPhoto = task.getResult();
-                        PushPostRealTimeDataBase(uriPhoto.toString(), description);
+                        PushPostRealTimeDataBase(task.getResult().toString(), description);
                     }
                 });
             }
@@ -108,22 +105,23 @@ public class DatabaseLogic extends AppCompatActivity {
 
     }
 
-    public void PushPostRealTimeDataBase(String photoUri, String description){
-
+    private void PushPostRealTimeDataBase(String photoUri, String description){
         DatabaseReference ref = FirebaseDatabase.getInstance(serverUrl).getReference("savingPostInfo");
 
-        ref.push().setValue("ter");
         ref.push().setValue(new PostPhoto(description, photoUri));
+    }
+
+
+    public void getPhoto(){
+
+
+
     }
 
 
     public boolean CheckLoginUser(){
         FirebaseUser user = auth.getCurrentUser();
-        if(user != null){
-            return true;
-        }else{
-            return false;
-        }
+        return user != null;
     }
 
     public boolean CheckEmailVerification(){
