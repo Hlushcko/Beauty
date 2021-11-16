@@ -3,6 +3,7 @@ package com.example.beauty.Menu;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
@@ -60,16 +61,17 @@ public class HomeActivity extends AppCompatActivity {
 
     private void getPhotoDB(){
 
-        listPost = new ArrayList<>(DB.getPhoto());
+        listPost = new ArrayList<DatabaseLogic.PostPhoto>(DB.getPhoto());
+        DatabaseLogic.PostPhoto postPhoto;
 
         for(int i = 0; i <= listPost.size() - 1; i++){
-
+            postPhoto = listPost.get(i);
+            AddPhotoFragment(ConvertUriToBitmap(postPhoto.getUriPhoto()));
         }
 
     }
 
     private Bitmap ConvertUriToBitmap(String UriPhoto){
-
         Bitmap bitmapImage = null;
 
         try {
@@ -83,14 +85,14 @@ public class HomeActivity extends AppCompatActivity {
         return bitmapImage;
     }
 
-    private void AddPhotoFragment(){
+    private void AddPhotoFragment(Bitmap bitmapPhoto){
 
         FragmentManager fragMen = getSupportFragmentManager();
         FragmentTransaction fragTran = fragMen.beginTransaction();
 
         PhotoFrameFragment photo = new PhotoFrameFragment();
         fragTran.add(R.id.LinerContainer, photo);
-        //photo.SetPhoto();
+        photo.SetPhoto(bitmapPhoto);
         fragTran.commit();
 
     }

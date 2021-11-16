@@ -1,5 +1,6 @@
 package com.example.beauty.Menu.FragmentMenu;
 
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
 
@@ -15,24 +16,23 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.beauty.R;
+import com.example.beauty.databinding.FragmentPhotoFrameBinding;
 
 import java.util.Objects;
 import java.util.zip.Inflater;
 
 public class PhotoFrameFragment extends Fragment {
 
-    public static FragmentManager manager;
+    FragmentPhotoFrameBinding photo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        manager = getChildFragmentManager();
         return inflater.inflate(R.layout.fragment_photo_frame, container, false);
     }
 
-    public void SetPhoto(){
-        Fragment image = manager.findFragmentById(R.id.PhotoPeople);
-
+    public void SetPhoto(Bitmap bitmap){
+        photo.PhotoPeople.setImageBitmap(bitmap);
     }
 
 }
