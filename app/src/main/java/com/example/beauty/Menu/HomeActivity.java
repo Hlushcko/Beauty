@@ -1,6 +1,8 @@
 package com.example.beauty.Menu;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 
@@ -15,11 +17,14 @@ import com.example.beauty.Menu.FragmentMenu.ListPhotoFragment;
 import com.example.beauty.Menu.FragmentMenu.PhotoFrameFragment;
 import com.example.beauty.R;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private final DatabaseLogic DB = new DatabaseLogic();
+    private DatabaseLogic DB;
+    private ArrayList<DatabaseLogic.PostPhoto> listPost = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,31 @@ public class HomeActivity extends AppCompatActivity {
         fragmentLPF.commit();
     }
 
+    private void getPhotoDB(){
+
+        listPost = new ArrayList<>(DB.getPhoto());
+
+        for(int i = 0; i <= listPost.size() - 1; i++){
+
+        }
+
+    }
+
+    private Bitmap ConvertUriToBitmap(String UriPhoto){
+
+        Bitmap bitmapImage = null;
+
+        try {
+            URL url = new URL(UriPhoto);
+            bitmapImage = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+
+        }catch (IOException exception){
+            exception.printStackTrace();
+        }
+
+        return bitmapImage;
+    }
+
     private void AddPhotoFragment(){
 
         FragmentManager fragMen = getSupportFragmentManager();
@@ -60,6 +90,7 @@ public class HomeActivity extends AppCompatActivity {
 
         PhotoFrameFragment photo = new PhotoFrameFragment();
         fragTran.add(R.id.LinerContainer, photo);
+        //photo.SetPhoto();
         fragTran.commit();
 
     }
