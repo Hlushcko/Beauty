@@ -2,11 +2,11 @@ package com.example.beauty;
 
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -25,19 +25,16 @@ import com.google.firebase.storage.UploadTask;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 
 public class DatabaseLogic extends AppCompatActivity {
-
 
     private final String serverUrl= "https://beauty-e0204-default-rtdb.europe-west1.firebasedatabase.app";
     private final StorageReference storageRef = FirebaseStorage.getInstance().getReference("DataBasePhoto");
     private final StorageReference myStorage = storageRef.child(System.currentTimeMillis() + "image");
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
     private final DatabaseReference RealTimeDB = FirebaseDatabase.getInstance(serverUrl).getReference("savingPostInfo");
-    final private int MAX_SIZE_ARRAY = 10;
 
 
 
@@ -112,36 +109,27 @@ public class DatabaseLogic extends AppCompatActivity {
 
     }
 
-    private void PushPostRealTimeDataBase(String photoUri, String description){
-        RealTimeDB.push().setValue(new PostPhoto(description, photoUri));
-    }
+    public static void getPhoto() {
+        final String serverUrl= "https://beauty-e0204-default-rtdb.europe-west1.firebasedatabase.app";
+        final DatabaseReference RealTimeDB = FirebaseDatabase.getInstance(serverUrl).getReference("savingPostInfo");
 
-    public ArrayList<PostPhoto> getPhoto(){
-
-        ArrayList<PostPhoto> pp = new ArrayList<>();
-
-        ValueEventListener eventListener = new ValueEventListener() {
+        ValueEventListener listener = new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot){
-
-                for(DataSnapshot DS : snapshot.child("savingPostInfo").getChildren()) {
-                    PostPhoto photo = DS.getValue(PostPhoto.class);
-                    assert photo != null;
-                    pp.add(photo);
-                    if(pp.size() == MAX_SIZE_ARRAY) {
-                        return;
-                    }
-                }
-
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                PostPhoto post = snapshot.child("savingPostInfo").getValue(PostPhoto.class);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.w("Load post", error.toException());
             }
         };
+        RealTimeDB.addListenerForSingleValueEvent(listener);
 
-        return pp;
+    }
+
+    private void PushPostRealTimeDataBase(String photoUri, String description){
+        RealTimeDB.push().setValue(new PostPhoto(description, photoUri));
     }
 
 

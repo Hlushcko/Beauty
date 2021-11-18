@@ -3,8 +3,8 @@ package com.example.beauty.Menu;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,17 +20,16 @@ import com.example.beauty.R;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity{
 
     private DatabaseLogic DB;
-    private ArrayList<DatabaseLogic.PostPhoto> listPost = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        GoHome(null);
     }
 
 
@@ -48,7 +47,12 @@ public class HomeActivity extends AppCompatActivity {
         fragmentLPF.replace(R.id.Container, LPF);
         fragmentLPF.commit();
 
-        ArrayList<DatabaseLogic.PostPhoto> postPhotos = new ArrayList<>(DB.getPhoto());
+        try {
+            DB.getPhoto();
+        }catch (NullPointerException exception){
+            Log.w("Bruh", exception);
+        }
+
     }
 
 
@@ -59,17 +63,10 @@ public class HomeActivity extends AppCompatActivity {
         fragmentLPF.commit();
     }
 
-    private void getPhotoDB(){
-
-        listPost = new ArrayList<DatabaseLogic.PostPhoto>(DB.getPhoto());
-        DatabaseLogic.PostPhoto postPhoto;
-
-        for(int i = 0; i <= listPost.size() - 1; i++){
-            postPhoto = listPost.get(i);
-            AddPhotoFragment(ConvertUriToBitmap(postPhoto.getUriPhoto()));
-        }
-
+    public void AddNewPhotoFirebase(View view){
+        startActivity(new Intent(this, AddPhotoFirebase.class));
     }
+
 
     private Bitmap ConvertUriToBitmap(String UriPhoto){
         Bitmap bitmapImage = null;
@@ -85,7 +82,8 @@ public class HomeActivity extends AppCompatActivity {
         return bitmapImage;
     }
 
-    private void AddPhotoFragment(Bitmap bitmapPhoto){
+
+    private void AddPhotoFragment(Bitmap bitmapPhoto) {
 
         FragmentManager fragMen = getSupportFragmentManager();
         FragmentTransaction fragTran = fragMen.beginTransaction();
@@ -95,10 +93,6 @@ public class HomeActivity extends AppCompatActivity {
         photo.SetPhoto(bitmapPhoto);
         fragTran.commit();
 
-    }
-
-    public void AddNewPhotoFirebase(View view){
-        startActivity(new Intent(this, AddPhotoFirebase.class));
     }
 
 

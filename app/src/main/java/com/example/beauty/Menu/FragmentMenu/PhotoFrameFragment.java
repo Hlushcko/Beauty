@@ -1,25 +1,17 @@
 package com.example.beauty.Menu.FragmentMenu;
 
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModel;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.example.beauty.R;
 import com.example.beauty.databinding.FragmentPhotoFrameBinding;
 
-import java.util.Objects;
-import java.util.zip.Inflater;
 
 public class PhotoFrameFragment extends Fragment {
 

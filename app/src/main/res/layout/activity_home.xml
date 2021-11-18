@@ -61,9 +61,9 @@
 
     <FrameLayout
         android:id="@+id/Container"
-        android:layout_below="@+id/Bord"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/Bord" />
 
 
 </RelativeLayout>
