@@ -23,7 +23,7 @@ import java.net.URL;
 
 public class HomeActivity extends AppCompatActivity{
 
-    private DatabaseLogic DB;
+    private DatabaseLogic DB = new DatabaseLogic();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +63,6 @@ public class HomeActivity extends AppCompatActivity{
         fragmentLPF.commit();
     }
 
-<<<<<<< HEAD
-    private void AddPhotoFragment(){
-=======
     public void AddNewPhotoFirebase(View view){
         startActivity(new Intent(this, AddPhotoFirebase.class));
     }
@@ -88,18 +85,15 @@ public class HomeActivity extends AppCompatActivity{
 
     private void AddPhotoFragment(Bitmap bitmapPhoto) {
 
->>>>>>> rxJava2
+
         FragmentManager fragMen = getSupportFragmentManager();
         FragmentTransaction fragTran = fragMen.beginTransaction();
 
         PhotoFrameFragment photo = new PhotoFrameFragment();
         fragTran.add(R.id.LinerContainer, photo);
-<<<<<<< HEAD
         //photo.setPhoto();
 
-=======
         photo.SetPhoto(bitmapPhoto);
->>>>>>> rxJava2
         fragTran.commit();
 
     }

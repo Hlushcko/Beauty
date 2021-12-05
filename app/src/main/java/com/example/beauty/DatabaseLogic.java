@@ -133,14 +133,20 @@ public class DatabaseLogic extends AppCompatActivity {
 
     }
 
-    public static void getPhoto() {
-        final String serverUrl= "https://beauty-e0204-default-rtdb.europe-west1.firebasedatabase.app";
-        final DatabaseReference RealTimeDB = FirebaseDatabase.getInstance(serverUrl).getReference("savingPostInfo");
+    public ArrayList<PostPhoto> getPhoto() {
+        ArrayList<PostPhoto> photo = new ArrayList<>();
 
         ValueEventListener listener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                PostPhoto post = snapshot.child("savingPostInfo").getValue(PostPhoto.class);
+
+                for(DataSnapshot data : snapshot.child("savingPostInfo").getChildren()) {
+                    PostPhoto post = data.getValue(PostPhoto.class);
+                    photo.add(post);
+                    if (photo.size() == 20) {
+                        return;
+                    }
+                }
             }
 
             @Override
@@ -148,8 +154,8 @@ public class DatabaseLogic extends AppCompatActivity {
                 Log.w("Load post", error.toException());
             }
         };
-        RealTimeDB.addListenerForSingleValueEvent(listener);
 
+        return photo;
     }
 
     private void PushPostRealTimeDataBase(String photoUri, String description){
