@@ -52,12 +52,13 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void AddPhotoFragment(){
-
         FragmentManager fragMen = getSupportFragmentManager();
         FragmentTransaction fragTran = fragMen.beginTransaction();
 
         PhotoFrameFragment photo = new PhotoFrameFragment();
         fragTran.add(R.id.LinerContainer, photo);
+        //photo.setPhoto();
+
         fragTran.commit();
 
     }
