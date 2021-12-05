@@ -2,11 +2,11 @@ package com.example.beauty;
 
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -31,14 +31,13 @@ import java.util.Objects;
 
 public class DatabaseLogic extends AppCompatActivity {
 
-
     private final String serverUrl= "https://beauty-e0204-default-rtdb.europe-west1.firebasedatabase.app";
-    private final FirebaseDatabase firebaseData = FirebaseDatabase.getInstance(serverUrl);
-    private final DatabaseReference PostReference = firebaseData.getReference("Post");
     private final StorageReference storageRef = FirebaseStorage.getInstance().getReference("DataBasePhoto");
     private final StorageReference myStorage = storageRef.child(System.currentTimeMillis() + "image");
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
-    private static Uri uriPhoto;
+    private final DatabaseReference RealTimeDB = FirebaseDatabase.getInstance(serverUrl).getReference("savingPostInfo");
+
+
 
     @Override
     protected void onStart() {
@@ -126,8 +125,7 @@ public class DatabaseLogic extends AppCompatActivity {
                 taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                     @Override
                     public void onComplete(@NonNull Task<Uri> task) {
-                        uriPhoto = task.getResult();
-                        PushPostRealTimeDataBase(uriPhoto.toString(), description);
+                        PushPostRealTimeDataBase(task.getResult().toString(), description);
                     }
                 });
             }
@@ -135,22 +133,33 @@ public class DatabaseLogic extends AppCompatActivity {
 
     }
 
-    public void PushPostRealTimeDataBase(String photoUri, String description){
+    public static void getPhoto() {
+        final String serverUrl= "https://beauty-e0204-default-rtdb.europe-west1.firebasedatabase.app";
+        final DatabaseReference RealTimeDB = FirebaseDatabase.getInstance(serverUrl).getReference("savingPostInfo");
 
-        DatabaseReference ref = FirebaseDatabase.getInstance(serverUrl).getReference("savingPostInfo");
+        ValueEventListener listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                PostPhoto post = snapshot.child("savingPostInfo").getValue(PostPhoto.class);
+            }
 
-        ref.push().setValue("ter");
-        ref.push().setValue(new PostPhoto(description, photoUri));
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w("Load post", error.toException());
+            }
+        };
+        RealTimeDB.addListenerForSingleValueEvent(listener);
+
+    }
+
+    private void PushPostRealTimeDataBase(String photoUri, String description){
+        RealTimeDB.push().setValue(new PostPhoto(description, photoUri));
     }
 
 
     public boolean CheckLoginUser(){
         FirebaseUser user = auth.getCurrentUser();
-        if(user != null){
-            return true;
-        }else{
-            return false;
-        }
+        return user != null;
     }
 
     public boolean CheckEmailVerification(){

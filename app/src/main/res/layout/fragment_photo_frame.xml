@@ -10,10 +10,10 @@
         android:id="@+id/PhotoPeople"
         android:layout_width="350dp"
         android:layout_height="400dp"
-        android:scaleType="center"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:background="@color/Grey_low"
-        android:layout_marginTop="10dp"/>
+        android:scaleType="center" />
 
     <LinearLayout
         android:id="@+id/Botton_menu"

@@ -8,13 +8,19 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+<<<<<<< HEAD
 import android.widget.Button;
 import android.widget.ImageView;
+=======
+>>>>>>> rxJava2
 
 import com.example.beauty.R;
+import com.example.beauty.databinding.FragmentPhotoFrameBinding;
+
 
 public class PhotoFrameFragment extends Fragment {
 
+    FragmentPhotoFrameBinding photo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -22,11 +28,17 @@ public class PhotoFrameFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_photo_frame, container, false);
     }
 
+<<<<<<< HEAD
     public void setPhoto(ImageView image, Bitmap bitmapImage){
         image.findViewById(R.id.PhotoPeople);
         image.setImageBitmap(bitmapImage);
     }
 
 
+=======
+    public void SetPhoto(Bitmap bitmap){
+        photo.PhotoPeople.setImageBitmap(bitmap);
+    }
+>>>>>>> rxJava2
 
 }
