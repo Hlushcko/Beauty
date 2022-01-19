@@ -32,10 +32,11 @@ import java.util.Objects;
 public class DatabaseLogic extends AppCompatActivity {
 
     private final String serverUrl= "https://beauty-e0204-default-rtdb.europe-west1.firebasedatabase.app";
+    private final FirebaseDatabase firebase = FirebaseDatabase.getInstance(serverUrl);
     private final StorageReference storageRef = FirebaseStorage.getInstance().getReference("DataBasePhoto");
     private final StorageReference myStorage = storageRef.child(System.currentTimeMillis() + "image");
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
-    private final DatabaseReference RealTimeDB = FirebaseDatabase.getInstance(serverUrl).getReference("savingPostInfo");
+    private final DatabaseReference RealTimeDB = firebase.getReference("savingPostInfo");
 
 
 
@@ -91,29 +92,6 @@ public class DatabaseLogic extends AppCompatActivity {
         });
     }
 
-    public ArrayList<PostPhoto> getImageFirebase(){
-        ArrayList<PostPhoto> postPhotos = new ArrayList<>();
-
-        ValueEventListener listener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                for(DataSnapshot ds : snapshot.child("savingPostInfo").getChildren()){
-                    postPhotos.add(ds.getValue(PostPhoto.class));
-                    if(postPhotos.size() == 10){
-                        return;
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
-
-        return postPhotos;
-    }
-
 
     public void PushImageDatabase(byte[] bytePhoto, String description){
 
@@ -133,17 +111,23 @@ public class DatabaseLogic extends AppCompatActivity {
 
     }
 
-    public ArrayList<PostPhoto> getPhoto() {
-        ArrayList<PostPhoto> photo = new ArrayList<>();
 
-        ValueEventListener listener = new ValueEventListener() {
+    static ArrayList<PostPhoto> photo = new ArrayList<>();
+
+    public void addPostPhotoToArray(PostPhoto postPhoto){
+        photo.add(postPhoto);
+    }
+
+    public void getPhotoFirebase() {
+
+        RealTimeDB.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                for(DataSnapshot data : snapshot.child("savingPostInfo").getChildren()) {
-                    PostPhoto post = data.getValue(PostPhoto.class);
-                    photo.add(post);
-                    if (photo.size() == 20) {
+                int size = 0;
+                for(DataSnapshot data : snapshot.getChildren()) {
+                    addPostPhotoToArray(data.getValue(PostPhoto.class));
+                    size++;
+                    if (size == 20) {
                         return;
                     }
                 }
@@ -153,9 +137,8 @@ public class DatabaseLogic extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.w("Load post", error.toException());
             }
-        };
+        });
 
-        return photo;
     }
 
     private void PushPostRealTimeDataBase(String photoUri, String description){
@@ -184,37 +167,6 @@ public class DatabaseLogic extends AppCompatActivity {
     private Boolean Check_null(String check){
         return !TextUtils.isEmpty(check);
     }
-
-
-    public static class PostPhoto{
-
-        public String description;
-        public String uriPhoto;
-
-        public PostPhoto(String Description, String UriPhoto) {
-            description = Description;
-            uriPhoto = UriPhoto;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
-
-        public String getUriPhoto() {
-            return uriPhoto;
-        }
-
-        public void setUriPhoto(String uriPhoto) {
-            this.uriPhoto = uriPhoto;
-        }
-
-    }
-
-
 
 
 }
