@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Beautys">
         <activity
-            android:name=".AddPhotoFirebase"
+            android:name=".WorkPhoto.AddPhotoFirebase"
             android:exported="true" />
         <activity android:name=".StartMenu.RegisterActivity" />
         <activity android:name=".Menu.HomeActivity" />

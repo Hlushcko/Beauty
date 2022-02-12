@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android progeckt/Beauty/app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.2145" />
         <entry key="..\:/Android progeckt/Beauty/app/src/main/res/layout/activity_home.xml" value="0.27760416666666665" />
         <entry key="..\:/Android progeckt/Beauty/app/src/main/res/layout/fragment_list_photo.xml" value="0.3252804141501294" />
         <entry key="..\:/Android progeckt/Beauty/app/src/main/res/layout/fragment_photo_frame.xml" value="0.33" />
@@ -12,7 +13,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -13,14 +13,12 @@ import android.view.ViewGroup;
 
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.beauty.R;
-import com.example.beauty.databinding.FragmentPhotoFrameBinding;
 
 
 public class PhotoFrameFragment extends Fragment{
 
-    ImageView imagePhoto;
-    Bundle bundle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,20 +26,19 @@ public class PhotoFrameFragment extends Fragment{
 
         View view = inflater.inflate(R.layout.fragment_photo_frame, container, false);
 
-        bundle = savedInstanceState;
-        imagePhoto = view.findViewById(R.id.PhotoPeople);
+        Bundle bundle = this.getArguments();
 
+        assert bundle != null;
+        String uri = bundle.getString("photo");
+
+        ImageView imagePhoto = view.findViewById(R.id.PhotoPeople);
+        Glide
+                .with(this)
+                .load(uri)
+                .into(imagePhoto);
 
         return inflater.inflate(R.layout.fragment_photo_frame, container, false);
     }
-
-
-    public void setPhoto(){
-        byte[] bytemap = bundle.getByteArray("photo");
-        Bitmap bitmap = BitmapFactory.decodeByteArray(bytemap, 0, bytemap.length);
-        imagePhoto.setImageBitmap(bitmap);
-    }
-
 
 
 }

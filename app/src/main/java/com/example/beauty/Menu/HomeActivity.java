@@ -1,35 +1,33 @@
 package com.example.beauty.Menu;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.beauty.AddPhotoFirebase;
-import com.example.beauty.DatabaseLogic;
-import com.example.beauty.Menu.FragmentMenu.ComentsFragment;
-import com.example.beauty.Menu.FragmentMenu.ListPhotoFragment;
 import com.example.beauty.Menu.FragmentMenu.PhotoFrameFragment;
-import com.example.beauty.PostPhoto;
+import com.example.beauty.WorkPhoto.AddPhotoFirebase;
+import com.example.beauty.Menu.FragmentMenu.ComentsFragment;
 import com.example.beauty.R;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
+import com.example.beauty.WorkPhoto.PostPhoto;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class HomeActivity extends AppCompatActivity{
 
-    private DatabaseLogic DB = new DatabaseLogic();
-    private ArrayList<PostPhoto> ph;
+    private final transient String serverUrl= "https://beauty-e0204-default-rtdb.europe-west1.firebasedatabase.app";
+    private final FirebaseDatabase firebase = FirebaseDatabase.getInstance(serverUrl);
+    private final DatabaseReference realTimeDB = firebase.getReference("savingPostInfo");
 
-    private static final ListPhotoFragment listPhoto = new ListPhotoFragment();
+    private static final int MAX_LENGTH_POST_PHOTO = 20;
 
 
     @Override
@@ -59,86 +57,58 @@ public class HomeActivity extends AppCompatActivity{
     }
 
     public void GoHome(View view) {
-        FragmentTransaction fragmentLPF = getSupportFragmentManager().beginTransaction();
-        fragmentLPF.replace(R.id.Container, listPhoto);
-        fragmentLPF.commit();
-        StreamPostPhoto();
+//        FragmentTransaction fragmentLPF = getSupportFragmentManager().beginTransaction();
+//        fragmentLPF.replace(R.id.Container, );
+//        fragmentLPF.commit();
+//
+        getPhotoFirebase();
     }
 
-    private void StreamPostPhoto( ){
+    public void getPhotoFirebase() {
 
-        new Thread(new Runnable() {
+        realTimeDB.addValueEventListener(new ValueEventListener() {
             @Override
-            public void run() {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int size = 0;
+                for(DataSnapshot data : snapshot.getChildren()) {
 
-                DB.getPhotoFirebase();
-                ph = new ArrayList<PostPhoto>();
-                Log.w("Size " + ph.size(), "lol");
-                for(PostPhoto photo : ph){
-                    AddPhotoFragment(ConvertBitmapToByte(ConvertUriToBitmap(photo.getUriPhoto())));
+                    PostPhoto post = data.getValue(PostPhoto.class);
+                    assert post != null;
+                    try {
+                        AddPhotoFragment(post.uriPhoto);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    size++;
+                    if (size == MAX_LENGTH_POST_PHOTO) {
+                        return;
+                    }
                 }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w("Load post", error.toException());
             }
         });
-
-//        DB.getPhotoFirebase();
-//        ph = new ArrayList<PostPhoto>();
-//        Log.w("Size " + ph.size(), "lol");
-//        for(PostPhoto photo : ph){
-//            AddPhotoFragment(ConvertBitmapToByte(ConvertUriToBitmap(photo.getUriPhoto())));
-//        }
     }
 
+    private void AddPhotoFragment(String uriPhoto) {
 
-    private byte[] ConvertBitmapToByte(Bitmap map){
-        ByteArrayOutputStream arrayByte = new ByteArrayOutputStream();
-        map.compress(Bitmap.CompressFormat.JPEG, 90, arrayByte);
-        return arrayByte.toByteArray();
-    }
-
-    private Bitmap ConvertUriToBitmap(String UriPhoto){
-        Bitmap bitmapImage = null;
-
-        try {
-            URL url = new URL(UriPhoto);
-            bitmapImage = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-
-        }catch (IOException exception){
-            exception.printStackTrace();
-        }
-
-        return bitmapImage;
-    }
-
-
-    private void AddPhotoFragment(byte[] bytesPhoto) {
-
-//        FragmentManager fragMen = getSupportFragmentManager();
-//        FragmentTransaction fragTran = fragMen.beginTransaction();
-//
-//        PhotoFrameFragment photo = new PhotoFrameFragment();
-//        fragTran.add(R.id.LinerContainer, photo);
-//
-//        photo.setPhoto();
-//        fragTran.commit();
-
-        FragmentManager fragMen = getSupportFragmentManager();
-        FragmentTransaction fragTran = fragMen.beginTransaction();
-
+        FragmentTransaction fragTran = getSupportFragmentManager().beginTransaction();
 
         Bundle bundle = new Bundle();
-        bundle.putByteArray("photo", bytesPhoto);
+        bundle.putString("photo", uriPhoto);
 
-        PhotoFrameFragment phf = new PhotoFrameFragment();
-        phf.setArguments(bundle);
+        PhotoFrameFragment pff = new PhotoFrameFragment();
+        pff.setArguments(bundle);
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.Container, phf)
-                .commit();
-        phf.setPhoto();
+        Log.w("Load post", uriPhoto);
+
+        fragTran.replace(R.id.Container, pff);
+        fragTran.commit();
 
     }
-
-
 
 }

@@ -1,4 +1,4 @@
-package com.example.beauty;
+package com.example.beauty.WorkPhoto;
 
 public class PostPhoto {
 

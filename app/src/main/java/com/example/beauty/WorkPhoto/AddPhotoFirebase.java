@@ -1,4 +1,4 @@
-package com.example.beauty;
+package com.example.beauty.WorkPhoto;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +12,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.beauty.DatabaseLogic;
 import com.example.beauty.Menu.HomeActivity;
+import com.example.beauty.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
