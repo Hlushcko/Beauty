@@ -44,10 +44,7 @@ public class DatabaseLogic extends AppCompatActivity {
 
     public void Register(String email, String password, String password_confirm){
 
-        Boolean email_boolean = Check_null(email);
-        Boolean password_boolean = Check_null(password);
-
-        if (email_boolean && password_boolean){
+        if (!email.isEmpty() && !password.isEmpty()){
 
             if(Objects.equals(password, password_confirm)){
 
@@ -65,11 +62,7 @@ public class DatabaseLogic extends AppCompatActivity {
 
     public void LogIn(String email, String password){
 
-        Boolean emailBoolean = Check_null(email);
-        Boolean passwordBoolean = Check_null(password);
-
-
-        if( emailBoolean && passwordBoolean) {
+        if( !email.isEmpty() && !password.isEmpty()) {
             auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -129,11 +122,5 @@ public class DatabaseLogic extends AppCompatActivity {
     public void SignOut(){
         FirebaseAuth.getInstance().signOut();
     }
-
-    // мені стидно за цей метод...
-    private Boolean Check_null(String check){
-        return !TextUtils.isEmpty(check);
-    }
-
 
 }

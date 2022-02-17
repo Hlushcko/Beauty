@@ -7,13 +7,12 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.beauty.Menu.FragmentMenu.PhotoFrameFragment;
-import com.example.beauty.WorkPhoto.AddPhotoFirebase;
 import com.example.beauty.Menu.FragmentMenu.ComentsFragment;
+import com.example.beauty.Menu.FragmentMenu.PhotoFrameFragment;
 import com.example.beauty.R;
+import com.example.beauty.WorkPhoto.AddPhotoFirebase;
 import com.example.beauty.WorkPhoto.PostPhoto;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,11 +22,12 @@ import com.google.firebase.database.ValueEventListener;
 
 public class HomeActivity extends AppCompatActivity{
 
-    private final transient String serverUrl= "https://beauty-e0204-default-rtdb.europe-west1.firebasedatabase.app";
+    private final String serverUrl= "https://beauty-e0204-default-rtdb.europe-west1.firebasedatabase.app";
     private final FirebaseDatabase firebase = FirebaseDatabase.getInstance(serverUrl);
     private final DatabaseReference realTimeDB = firebase.getReference("savingPostInfo");
 
     private static final int MAX_LENGTH_POST_PHOTO = 20;
+    private static final String KEY_URL_PHOTO = "Photo";
 
 
     @Override
@@ -60,16 +60,19 @@ public class HomeActivity extends AppCompatActivity{
 //        FragmentTransaction fragmentLPF = getSupportFragmentManager().beginTransaction();
 //        fragmentLPF.replace(R.id.Container, );
 //        fragmentLPF.commit();
-//
+
         getPhotoFirebase();
     }
 
+
+    // Да-да, это уже не MVP, из-за onDataChange не могу записать данные в лист так что
+    // временно написал этот код пока не найду нормальный способ вернуть данные из onDataChange
     public void getPhotoFirebase() {
 
         realTimeDB.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int size = 0;
+
                 for(DataSnapshot data : snapshot.getChildren()) {
 
                     PostPhoto post = data.getValue(PostPhoto.class);
@@ -80,11 +83,8 @@ public class HomeActivity extends AppCompatActivity{
                         e.printStackTrace();
                     }
 
-                    size++;
-                    if (size == MAX_LENGTH_POST_PHOTO) {
-                        return;
-                    }
                 }
+
             }
 
             @Override
@@ -92,19 +92,20 @@ public class HomeActivity extends AppCompatActivity{
                 Log.w("Load post", error.toException());
             }
         });
+
+
     }
 
-    private void AddPhotoFragment(String uriPhoto) {
+
+    private synchronized void AddPhotoFragment(String uriPhoto) {
 
         FragmentTransaction fragTran = getSupportFragmentManager().beginTransaction();
 
         Bundle bundle = new Bundle();
-        bundle.putString("photo", uriPhoto);
+        bundle.putString(KEY_URL_PHOTO, uriPhoto);
 
         PhotoFrameFragment pff = new PhotoFrameFragment();
         pff.setArguments(bundle);
-
-        Log.w("Load post", uriPhoto);
 
         fragTran.replace(R.id.Container, pff);
         fragTran.commit();

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     tools:context=".Menu.FragmentMenu.PhotoFrameFragment"
     android:orientation="vertical">
 
     <ImageView
         android:id="@+id/PhotoPeople"
-        android:layout_width="350dp"
-        android:layout_height="400dp"
+        android:layout_width="300dp"
+        android:layout_height="350dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:background="@color/Grey_low"
@@ -26,9 +26,8 @@
             android:id="@+id/Like"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@drawable/ic_baseline_star_border_24"
             android:layout_marginStart="30dp"
-            />
+            android:background="@drawable/ic_baseline_star_border_24" />
 
 
         <Button
@@ -46,8 +45,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="200dp"
-            android:background="@drawable/ic_baseline_add_circle_outline_24"
-            />
+            android:background="@drawable/ic_baseline_add_circle_outline_24" />
 
 
         <Button
@@ -55,8 +53,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="15dp"
-            android:background="@drawable/ic_baseline_save_alt_24"
-            />
+            android:background="@drawable/ic_baseline_save_alt_24" />
 
 
     </LinearLayout>
