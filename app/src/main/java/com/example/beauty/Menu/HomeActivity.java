@@ -1,9 +1,12 @@
 package com.example.beauty.Menu;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +29,6 @@ public class HomeActivity extends AppCompatActivity{
     private final FirebaseDatabase firebase = FirebaseDatabase.getInstance(serverUrl);
     private final DatabaseReference realTimeDB = firebase.getReference("savingPostInfo");
 
-    private static final int MAX_LENGTH_POST_PHOTO = 20;
     private static final String KEY_URL_PHOTO = "Photo";
 
 
@@ -82,9 +84,7 @@ public class HomeActivity extends AppCompatActivity{
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                 }
-
             }
 
             @Override
@@ -107,7 +107,7 @@ public class HomeActivity extends AppCompatActivity{
         PhotoFrameFragment pff = new PhotoFrameFragment();
         pff.setArguments(bundle);
 
-        fragTran.replace(R.id.Container, pff);
+        fragTran.add(R.id.fragmentContainer, pff);
         fragTran.commit();
 
     }
