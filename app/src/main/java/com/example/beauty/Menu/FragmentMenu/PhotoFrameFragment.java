@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
 import androidx.fragment.app.Fragment;
@@ -36,12 +37,15 @@ public class PhotoFrameFragment extends Fragment{
         view = inflater.inflate(R.layout.fragment_photo_frame, container, false);
         imagePhoto = (ImageView) view.findViewById(R.id.PhotoPeople);
 
-        Glide
-                .with(imagePhoto.getContext())
-                .load(uri)
-                .error(R.drawable.ic_launcher_foreground)
-                .centerCrop()
-                .into(imagePhoto);
+        TextView text1 = view.findViewById(R.id.TextView1);
+        text1.setText(uri);
+
+//        Glide
+//                .with(imagePhoto.getContext())
+//                .load(uri)
+//                .error(R.drawable.ic_launcher_foreground)
+//                .centerCrop()
+//                .into(imagePhoto);
 
 
         return inflater.inflate(R.layout.fragment_photo_frame, container, false);

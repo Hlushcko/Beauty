@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.example.beauty.Menu.FragmentMenu.ComentsFragment;
 import com.example.beauty.Menu.FragmentMenu.PhotoFrameFragment;
 import com.example.beauty.R;
@@ -47,6 +49,7 @@ public class HomeActivity extends AppCompatActivity{
         fragmentLPF.commit();
     }
 
+
     public void GoSetting(View view) {
         ComentsFragment LPF = new ComentsFragment();
         FragmentTransaction fragmentLPF = getSupportFragmentManager().beginTransaction();
@@ -54,9 +57,11 @@ public class HomeActivity extends AppCompatActivity{
         fragmentLPF.commit();
     }
 
+
     public void AddNewPhotoFirebase(View view){
         startActivity(new Intent(this, AddPhotoFirebase.class));
     }
+
 
     public void GoHome(View view) {
 //        FragmentTransaction fragmentLPF = getSupportFragmentManager().beginTransaction();

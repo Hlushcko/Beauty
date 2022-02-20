@@ -22,6 +22,7 @@
         android:layout_below="@+id/PhotoPeople"
         android:layout_marginTop="5dp">
 
+
         <Button
             android:id="@+id/Like"
             android:layout_width="30dp"
@@ -39,6 +40,16 @@
 
             />
 
+
+        <TextView
+            android:id="@+id/TextView1"
+            android:layout_marginStart="20dp"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:fontFamily="@font/paytone_one"
+            android:textSize="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <Button
             android:id="@+id/SaveBookmarks"
