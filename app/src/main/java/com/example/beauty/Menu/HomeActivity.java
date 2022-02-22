@@ -1,22 +1,19 @@
 package com.example.beauty.Menu;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.bumptech.glide.Glide;
 import com.example.beauty.Menu.FragmentMenu.ComentsFragment;
 import com.example.beauty.Menu.FragmentMenu.PhotoFrameFragment;
 import com.example.beauty.R;
+import com.example.beauty.Menu.FragmentMenu.UserAccount;
 import com.example.beauty.WorkPhoto.AddPhotoFirebase;
 import com.example.beauty.WorkPhoto.PostPhoto;
 import com.google.firebase.database.DataSnapshot;
@@ -24,6 +21,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity{
 
@@ -43,17 +42,29 @@ public class HomeActivity extends AppCompatActivity{
 
 
     public void GoAccount(View view) {
-        ComentsFragment LPF = new ComentsFragment();
+        LinearLayout liner = (LinearLayout) findViewById(R.id.fragmentContainer);
+        if(!Objects.isNull(liner)) {
+            liner.removeAllViews();
+        }
+
+        UserAccount user = new UserAccount();
         FragmentTransaction fragmentLPF = getSupportFragmentManager().beginTransaction();
-        fragmentLPF.replace(R.id.Container, LPF);
+        fragmentLPF.replace(R.id.fragmentContainer, user);
         fragmentLPF.commit();
+
     }
 
 
     public void GoSetting(View view) {
+        LinearLayout liner = (LinearLayout) findViewById(R.id.fragmentContainer);
+        if(!Objects.isNull(liner)) {
+            liner.removeAllViews();
+        }
+
+
         ComentsFragment LPF = new ComentsFragment();
         FragmentTransaction fragmentLPF = getSupportFragmentManager().beginTransaction();
-        fragmentLPF.replace(R.id.Container, LPF);
+        fragmentLPF.replace(R.id.fragmentContainer, LPF);
         fragmentLPF.commit();
     }
 

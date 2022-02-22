@@ -104,7 +104,6 @@ public class DatabaseLogic extends AppCompatActivity {
         realTimeDB.push().setValue(new PostPhoto(description, photoUri));
     }
 
-
     public boolean CheckLoginUser(){
         FirebaseUser user = auth.getCurrentUser();
         return user != null;
