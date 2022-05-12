@@ -1,7 +1,7 @@
-package com.example.beauty;
+package com.example.beauty.database;
 
 import android.net.Uri;
-import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,8 +14,11 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -35,44 +38,40 @@ public class DatabaseLogic extends AppCompatActivity {
     private final DatabaseReference realTimeDB = firebase.getReference("savingPostInfo");
 
 
-
     @Override
     protected void onStart() {
         super.onStart();
         FirebaseApp.initializeApp(this);
     }
 
-    public void Register(String email, String password, String password_confirm){
+    public void register(String email, String password){
 
         if (!email.isEmpty() && !password.isEmpty()){
 
-            if(Objects.equals(password, password_confirm)){
+            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                    verification();
+                }
+            });
 
-                auth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
-                                Verification();
-                            }
-                        });
-            }
         }
+
     }
 
 
-    public void LogIn(String email, String password){
+    public void logIn(String email, String password){
 
         if( !email.isEmpty() && !password.isEmpty()) {
-            auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
-                        }
-                    });
+            auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                }
+            });
         }
     }
 
-    private void Verification(){
+    private void verification(){
         Objects.requireNonNull(auth.getCurrentUser()).sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<Void> task) {
@@ -82,7 +81,7 @@ public class DatabaseLogic extends AppCompatActivity {
     }
 
 
-    public void PushImageDatabase(byte[] bytePhoto, String description){
+    public void pushImageDatabase(byte[] bytePhoto, String description){
 
         UploadTask uploadTask = myStorage.putBytes(bytePhoto);
 
@@ -92,7 +91,7 @@ public class DatabaseLogic extends AppCompatActivity {
                 taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                     @Override
                     public void onComplete(@NonNull Task<Uri> task) {
-                        PushPostRealTimeDataBase(task.getResult().toString(), description);
+                        pushPostRealTimeDataBase(task.getResult().toString(), description);
                     }
                 });
             }
@@ -100,25 +99,44 @@ public class DatabaseLogic extends AppCompatActivity {
 
     }
 
-    private void PushPostRealTimeDataBase(String photoUri, String description){
+
+    public void getPhotoFirebase(DataChangeInfo dataInfo) {
+
+        realTimeDB.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dataInfo.dataOnDataChange(snapshot);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w("Load post", error.toException());
+            }
+        });
+
+
+    }
+
+    private void pushPostRealTimeDataBase(String photoUri, String description){
         realTimeDB.push().setValue(new PostPhoto(description, photoUri));
     }
 
-    public boolean CheckLoginUser(){
+    public boolean checkLoginUser(){
         FirebaseUser user = auth.getCurrentUser();
         return user != null;
     }
 
-    public boolean CheckEmailVerification(){
+    public boolean checkEmailVerification(){
         FirebaseUser user = auth.getCurrentUser();
+
         return Objects.requireNonNull(user).isEmailVerified();
     }
 
-    public void ResetPassword(String email){
+    public void resetPassword(String email){
         auth.sendPasswordResetEmail(email);
     }
 
-    public void SignOut(){
+    public void signOut(){
         FirebaseAuth.getInstance().signOut();
     }
 

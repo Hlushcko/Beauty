@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StartMenu.RegisterActivity"
+    tools:context=".Menu.StartMenu.RegisterActivity"
     android:orientation="vertical">
 
 
@@ -15,7 +15,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/ic_baseline_arrow_back_24"
-        android:onClick="Back" />
+        android:onClick="back" />
 
 
     <TextView

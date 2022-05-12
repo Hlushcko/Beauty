@@ -3,9 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Menu.FragmentMenu.ComentsFragment"
-    android:background="@color/Grey">
+    tools:context=".Menu.HomeMenu.fragment.ScrollFragment">
 
-
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 </FrameLayout>

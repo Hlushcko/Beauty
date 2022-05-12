@@ -1,4 +1,4 @@
-package com.example.beauty.Menu.FragmentMenu;
+package com.example.beauty.Menu.HomeMenu.fragment;
 
 import android.os.Bundle;
 

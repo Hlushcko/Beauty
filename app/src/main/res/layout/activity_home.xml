@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Menu.HomeActivity"
+    tools:context=".Menu.HomeMenu.HomeActivity"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -69,23 +69,13 @@
         android:onClick="AddNewPhotoFirebase"
         />
 
-    <ScrollView
-        android:layout_below="@+id/Bord"
+
+    <FrameLayout
+        android:id="@+id/Container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/Bord"
+        />
 
-        <LinearLayout
-            android:id="@+id/fragmentContainer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <FrameLayout
-                android:id="@+id/Container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-        </LinearLayout>
-    </ScrollView>
 
 </RelativeLayout>

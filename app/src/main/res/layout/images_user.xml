@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="50dp">
+
+
+    <ImageView
+        android:id="@+id/PhotoPeople"
+        android:layout_width="300dp"
+        android:layout_height="350dp"
+        android:background="@color/Grey_low"
+        android:scaleType="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/Botton_menu"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@+id/PhotoPeople"-->
+    <!--        android:layout_marginTop="5dp">-->
+
+
+    <!--        <Button-->
+    <!--            android:id="@+id/Like"-->
+    <!--            android:layout_width="30dp"-->
+    <!--            android:layout_height="30dp"-->
+    <!--            android:layout_marginStart="30dp"-->
+    <!--            android:background="@drawable/ic_baseline_star_border_24" />-->
+
+
+    <!--        <Button-->
+    <!--            android:id="@+id/Comments"-->
+    <!--            android:layout_width="30dp"-->
+    <!--            android:layout_height="30dp"-->
+    <!--            android:layout_marginStart="15dp"-->
+    <!--            android:background="@drawable/ic_baseline_mode_comment_24"-->
+
+    <!--            />-->
+
+
+    <!--        <Button-->
+    <!--            android:id="@+id/SaveBookmarks"-->
+    <!--            android:layout_width="30dp"-->
+    <!--            android:layout_height="30dp"-->
+    <!--            android:layout_marginStart="200dp"-->
+    <!--            android:background="@drawable/ic_baseline_add_circle_outline_24" />-->
+
+
+    <!--        <Button-->
+    <!--            android:id="@+id/SaveGalery"-->
+    <!--            android:layout_width="30dp"-->
+    <!--            android:layout_height="30dp"-->
+    <!--            android:layout_marginStart="15dp"-->
+    <!--            android:background="@drawable/ic_baseline_save_alt_24" />-->
+
+    <!--    </LinearLayout>-->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
