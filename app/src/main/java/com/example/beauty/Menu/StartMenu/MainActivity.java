@@ -14,6 +14,11 @@ import com.example.beauty.R;
 import com.example.beauty.viewmodel.ViewModelFirebase;
 
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -34,16 +39,24 @@ public class MainActivity extends AppCompatActivity {
         EditText email = findViewById(R.id.Email_edit_text);
         EditText password = findViewById(R.id.Password_edit_text);
 
-        viewModel.logIn(email.getText().toString(), password.getText().toString());
-        CheckLoginUser();
+        if(email.getText().toString().contains("@") && !password.getText().toString().isEmpty()){
+            viewModel.logIn(email.getText().toString(), password.getText().toString());
+        }else{
+            Toast.makeText(this, "your mail or password is not valid", Toast.LENGTH_SHORT).show();
+        }
+
+        Single
+                .timer(1, TimeUnit.SECONDS)
+                .map(p -> {
+                    CheckLoginUser();
+                    return p; })
+                .subscribe();
     }
 
 
     private void CheckLoginUser() {
         if (viewModel.userIsLoginAndVerification()) {
             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-        } else {
-            setContentView(R.layout.activity_main);
         }
     }
 
@@ -51,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     public void ResetPassword(View view) {
         EditText email = findViewById(R.id.Email_edit_text);
 
-        if(!Objects.isNull(email)) {
+        if(email.getText().toString().contains("@")) {
             viewModel.resetPassword(email.getText().toString());
             Toast.makeText(this, "check you email", Toast.LENGTH_LONG).show();
             email.setText("");

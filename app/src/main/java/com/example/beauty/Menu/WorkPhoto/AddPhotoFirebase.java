@@ -1,4 +1,4 @@
-package com.example.beauty.WorkPhoto;
+package com.example.beauty.Menu.WorkPhoto;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.beauty.Menu.HomeMenu.HomeActivity;
+import com.example.beauty.Menu.StartMenu.MainActivity;
 import com.example.beauty.R;
 import com.example.beauty.viewmodel.ViewModelFirebase;
 
@@ -90,5 +91,6 @@ public class AddPhotoFirebase extends AppCompatActivity {
 
     public void logout(View view) {
         viewModel.signOut();
+        startActivity(new Intent(this, MainActivity.class));
     }
 }

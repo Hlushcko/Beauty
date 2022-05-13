@@ -11,7 +11,7 @@ import com.example.beauty.Menu.HomeMenu.fragment.ScrollFragment;
 import com.example.beauty.Menu.HomeMenu.fragment.SettingFragment;
 import com.example.beauty.R;
 import com.example.beauty.Menu.HomeMenu.fragment.UserAccount;
-import com.example.beauty.WorkPhoto.AddPhotoFirebase;
+import com.example.beauty.Menu.WorkPhoto.AddPhotoFirebase;
 
 public class HomeActivity extends AppCompatActivity{
 

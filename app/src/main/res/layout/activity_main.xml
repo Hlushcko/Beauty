@@ -50,13 +50,12 @@
         android:id="@+id/Forgot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/forgot_password"
-        android:textColor="@color/Grey"
         android:layout_below="@+id/Password_edit_text"
-        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:onClick="ResetPassword"
-        />
+        android:text="@string/forgot_password"
+        android:textColor="@color/Grey" />
 
 
     <Button

@@ -6,7 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.beauty.WorkPhoto.PostPhoto;
+import com.example.beauty.Menu.WorkPhoto.PostPhoto;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -128,9 +128,12 @@ public class DatabaseLogic extends AppCompatActivity {
 
     public boolean checkEmailVerification(){
         FirebaseUser user = auth.getCurrentUser();
-
-        return Objects.requireNonNull(user).isEmailVerified();
-    }
+        if(user != null){
+            return true;
+        }else {
+            return false;
+        }
+        }
 
     public void resetPassword(String email){
         auth.sendPasswordResetEmail(email);

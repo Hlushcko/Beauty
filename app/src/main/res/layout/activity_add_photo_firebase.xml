@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WorkPhoto.AddPhotoFirebase">
+    tools:context=".Menu.WorkPhoto.AddPhotoFirebase">
 
     <Button
         android:id="@+id/Back"
@@ -15,14 +15,6 @@
         android:background="@drawable/ic_baseline_arrow_back_24"
         android:onClick="back" />
 
-    <Button
-        android:id="@+id/LogOut"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="350dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/ic_baseline_arrow_back_24"
-        android:onClick="logout" />
 
     <ImageView
         android:id="@+id/imageLoad"
@@ -64,6 +56,17 @@
 
 
 
+    <Button
+        android:id="@+id/LogOut"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:text="@string/log_out"
+        android:background="@color/black"
+        android:textColor="@color/white"
+        android:onClick="logout" />
 
 
 </RelativeLayout>

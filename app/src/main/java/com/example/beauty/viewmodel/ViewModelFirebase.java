@@ -2,6 +2,8 @@ package com.example.beauty.viewmodel;
 
 import android.annotation.SuppressLint;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.beauty.database.DataChangeInfo;
@@ -73,7 +75,7 @@ public class ViewModelFirebase extends ViewModel{
 
 
     public Boolean userIsLoginAndVerification(){
-        return db.checkLoginUser() & db.checkEmailVerification();
+        return db.checkEmailVerification();
     }
 
 

@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 
 import com.example.beauty.database.DataChangeInfo;
 import com.example.beauty.R;
-import com.example.beauty.WorkPhoto.PostPhoto;
+import com.example.beauty.Menu.WorkPhoto.PostPhoto;
 import com.example.beauty.recyclerview.RecycleViewFragment;
 import com.example.beauty.viewmodel.ViewModelFirebase;
 import com.google.firebase.database.DataSnapshot;

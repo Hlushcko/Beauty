@@ -26,5 +26,6 @@
     <string name="infoPost">Описание</string>
     <string name="push">Push</string>
     <string name="hello_blank_fragment">It is setting fragment</string>
+    <string name="log_out">Log out</string>
 
 </resources>

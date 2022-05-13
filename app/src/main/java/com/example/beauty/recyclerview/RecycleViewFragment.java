@@ -2,20 +2,17 @@ package com.example.beauty.recyclerview;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.beauty.R;
-import com.example.beauty.WorkPhoto.PostPhoto;
+import com.example.beauty.Menu.WorkPhoto.PostPhoto;
 
 import java.util.ArrayList;
 import java.util.List;
